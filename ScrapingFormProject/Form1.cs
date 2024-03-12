@@ -83,26 +83,23 @@ namespace ScrapingFormProject
 
 
 
-            var driver = new ChromeDriver(options);
-            var driver2 = new ChromeDriver(options);
-            var driver3 = new ChromeDriver(options);
+            var driverDHL = new ChromeDriver(options);
+            var driverFedex = new ChromeDriver(options);
+            var driverUPS = new ChromeDriver(options);
 
-            driver.Url = "https://mydhl.express.dhl/us/en/auth/logout.html";
-            driver2.Url = "https://www.fedex.com/secure-login/#/login-credentials";
-            driver3.Url = "https://www.ups.com/lasso/login?loc=tr_TR&returnto=https%3A%2F%2Fwww.ups.com%2Ftr%2Ftr%2FHome.page";
+            driverDHL.Url = "https://mydhl.express.dhl/us/en/auth/logout.html";
+            driverFedex.Url = "https://www.fedex.com/secure-login/#/login-credentials";
+            driverUPS.Url = "https://www.ups.com/lasso/login?loc=tr_TR&returnto=https%3A%2F%2Fwww.ups.com%2Ftr%2Ftr%2FHome.page";
 
-            //    Thread.Sleep(6000);
-
-            //driver.Manage().Timeouts().PageLoad.Add(TimeSpan.FromSeconds(30));
-            //driver2.Manage().Timeouts().PageLoad.Add(TimeSpan.FromSeconds(30));
-            driver.Manage().Timeouts().PageLoad.Add(TimeSpan.FromSeconds(100));
-            driver2.Manage().Timeouts().PageLoad.Add(TimeSpan.FromSeconds(100));
-            driver3.Manage().Timeouts().PageLoad.Add(TimeSpan.FromSeconds(100));
+            
+            driverDHL.Manage().Timeouts().PageLoad.Add(TimeSpan.FromSeconds(100));
+            driverFedex.Manage().Timeouts().PageLoad.Add(TimeSpan.FromSeconds(100));
+            driverUPS.Manage().Timeouts().PageLoad.Add(TimeSpan.FromSeconds(100));
 
 
             //DHL
-            var username = driver.FindElement(By.Name("username"));
-            var password = driver.FindElement(By.Name("password"));
+            var username = driverDHL.FindElement(By.Name("username"));
+            var password = driverDHL.FindElement(By.Name("password"));
             username.Clear();
             username.SendKeys("airexpress@airexpresscargo.net");
             password.Clear();
@@ -112,8 +109,8 @@ namespace ScrapingFormProject
 
             Thread.Sleep(4000);
             //FEDEX
-            var usernameFedex = driver2.FindElement(By.Id("userId"));
-            var passwordFedex = driver2.FindElement(By.Id("password"));
+            var usernameFedex = driverFedex.FindElement(By.Id("userId"));
+            var passwordFedex = driverFedex.FindElement(By.Id("password"));
             usernameFedex.Clear();
             passwordFedex.Clear();
             passwordFedex.SendKeys("123456Ab");
@@ -129,31 +126,31 @@ namespace ScrapingFormProject
 
             //UPS
 
-            var usernameUPS = driver3.FindElement(By.Id("email"));
+            var usernameUPS = driverUPS.FindElement(By.Id("email"));
             usernameUPS.Clear();
             usernameUPS.SendKeys("airexpresscargo");
             Thread.Sleep(1500);
-            var continue_btn = driver3.FindElement(By.XPath("/html/body/div[1]/div[3]/div/div/div/div/div/main/div/div/div/form/div[3]/div/button"));
+            var continue_btn = driverUPS.FindElement(By.XPath("/html/body/div[1]/div[3]/div/div/div/div/div/main/div/div/div/form/div[3]/div/button"));
             continue_btn.Click();
 
             Thread.Sleep(5000);
-            var passwordUPS = driver3.FindElement(By.Id("pwd"));
+            var passwordUPS = driverUPS.FindElement(By.Id("pwd"));
             passwordUPS.Clear();
             passwordUPS.SendKeys("Airex6515152.");
-            var login_btn = driver3.FindElement(By.XPath("/html/body/div[1]/div[3]/div/div/div/div/div/main/div/div/div/form/div[3]/div/button"));
+            var login_btn = driverUPS.FindElement(By.XPath("/html/body/div[1]/div[3]/div/div/div/div/div/main/div/div/div/form/div[3]/div/button"));
             login_btn.Click();
             Thread.Sleep(1500);
 
-            //"RETRY
 
 
 
 
             //DHL
-            var btn = driver.FindElement(By.XPath("/html/body/div[8]/div[2]/div[2]/div[3]/div/button[1]"));
-            btn.Click();
-            Thread.Sleep(1000);
-            var submitbtn = driver.FindElement(By.XPath("/html/body/header/div[1]/div[3]/div/table/tbody/tr/td[2]/table[1]/tbody/tr/td[2]/div/div/div[2]/form/button"));
+            ///
+            var acceptCookiesbtn = driverDHL.FindElement(By.XPath("/html/body/div[8]/div[2]/div[2]/div[3]/div/button[1]"));
+            acceptCookiesbtn.Click();
+            Thread.Sleep(1500);
+            var submitbtn = driverDHL.FindElement(By.XPath("html/body/header/div[1]/div[3]/div/table/tbody/tr/td[2]/table[1]/tbody/tr/td[2]/div/div/div/div/div/div[2]/form/button"));
 
             submitbtn.Click();
             Thread.Sleep(5000);
@@ -161,12 +158,12 @@ namespace ScrapingFormProject
 
 
             //FEDEX                                  
-            var btn2 = driver2.FindElement(By.XPath("/html/body/wlgn-root/div/ciam-head-foot/main/div/div/div/div/wlgn-login-credentials/div/form/div[7]/ciam-spinner-button/button"));
+            var btn2 = driverFedex.FindElement(By.XPath("/html/body/wlgn-root/div/ciam-head-foot/main/div/div/div/div/wlgn-login-credentials/div/form/div[7]/ciam-spinner-button/button"));
             btn2.Click();
             Task.Delay(15000);
             try
             {
-                var retry = driver2.FindElement(By.XPath("/html/body/wlgn-root/div/ciam-head-foot/fdx-common-core/main/div/div/div/div/wlgn-error/wlgn-retry/div/div/ciam-spinner-button/button"));
+                var retry = driverFedex.FindElement(By.XPath("/html/body/wlgn-root/div/ciam-head-foot/fdx-common-core/main/div/div/div/div/wlgn-error/wlgn-retry/div/div/ciam-spinner-button/button"));
                 retry.Click();
                 Thread.Sleep(10000);
 
@@ -179,38 +176,38 @@ namespace ScrapingFormProject
 
                 try
                 {
-                    var english_selection = driver2.FindElement(By.XPath("/html/body/dialog/div/div/div/div/div/div/div[2]/ul/li[1]/a"));
+                    var english_selection = driverFedex.FindElement(By.XPath("/html/body/dialog/div/div/div/div/div/div/div[2]/ul/li[1]/a"));
                     english_selection.Click();
 
                 }
                 catch (Exception exc)
                 {
-                    var btn_login = driver2.FindElement(By.XPath("/html/body/wlgn-root/div/ciam-head-foot/main/div/div/div/div/wlgn-login-credentials/div/form/div[7]/ciam-spinner-button/button"));
+                    var btn_login = driverFedex.FindElement(By.XPath("/html/body/wlgn-root/div/ciam-head-foot/main/div/div/div/div/wlgn-login-credentials/div/form/div[7]/ciam-spinner-button/button"));
                     btn_login.Click();
                     Thread.Sleep(30000);
-                    var english_selection = driver2.FindElement(By.XPath("/html/body/dialog/div/div/div/div/div/div/div[2]/ul/li[1]/a"));
+                    var english_selection = driverFedex.FindElement(By.XPath("/html/body/dialog/div/div/div/div/div/div/div[2]/ul/li[1]/a"));
                     english_selection.Click();
                 }
 
                 Thread.Sleep(5000);
-                driver2.Manage().Window.Maximize();
+                driverFedex.Manage().Window.Maximize();
 
-                var tracking_btn = driver2.FindElement(By.XPath("/html/body/div[1]/div[1]/div/div/div/div/header/nav/div/div[1]/div/div[2]/div/div/a"));
+                var tracking_btn = driverFedex.FindElement(By.XPath("/html/body/div[1]/div[1]/div/div/div/div/header/nav/div/div[1]/div/div[2]/div/div/a"));
                 tracking_btn.Click();
                 Thread.Sleep(1000);
 
-                var ship_tracking = driver2.FindElement(By.XPath("/html/body/div[1]/div[1]/div/div/div/div/header/nav/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/a"));
+                var ship_tracking = driverFedex.FindElement(By.XPath("/html/body/div[1]/div[1]/div/div/div/div/header/nav/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/a"));
                 ship_tracking.Click();
                 Thread.Sleep(15000);
                 try
                 {
-                    var label_filter = driver2.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/div/div[2]/app-dashboard/div/app-dashboard-tile[3]"));
+                    var label_filter = driverFedex.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/div/div[2]/app-dashboard/div/app-dashboard-tile[3]"));
                     label_filter.Click();
                     Thread.Sleep(5000);
                 }
                 catch (ElementNotInteractableException ex)
                 {
-                    var label_filter = driver2.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/div/div[2]/app-dashboard/div/app-dashboard-tile[3]"));
+                    var label_filter = driverFedex.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/div/div[2]/app-dashboard/div/app-dashboard-tile[3]"));
                     label_filter.Click();
                     Thread.Sleep(5000);
                 }
@@ -220,30 +217,30 @@ namespace ScrapingFormProject
 
 
 
-                var edit_columns = driver2.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[1]/nav/ul/li[2]/button[2]"));
+                var edit_columns = driverFedex.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[1]/nav/ul/li[2]/button[2]"));
                 edit_columns.Click();
                 Thread.Sleep(2500);
-                var uncheck_delivered_date = driver2.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[2]/div/div/div[5]/span"));
+                var uncheck_delivered_date = driverFedex.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[2]/div/div/div[5]/span"));
                 uncheck_delivered_date.Click();
                 Thread.Sleep(1000);
-                var uncheck_direction = driver2.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[2]/div/div/div[11]/span"));
+                var uncheck_direction = driverFedex.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[2]/div/div/div[11]/span"));
                 uncheck_direction.Click();
                 Thread.Sleep(3000);
 
 
-                var uncheck_reference = driver2.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[2]/div/div/div[35]/span"));
+                var uncheck_reference = driverFedex.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[2]/div/div/div[35]/span"));
                 uncheck_reference.Click();
                 Thread.Sleep(3000);
-                var uncheck_scheduled_delivery_time = driver2.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[2]/div/div/div[42]/span"));
+                var uncheck_scheduled_delivery_time = driverFedex.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[2]/div/div/div[42]/span"));
                 uncheck_scheduled_delivery_time.Click();
                 Thread.Sleep(2000);
-                var delivery_time_before = driver2.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[2]/div/div/div[43]/span"));
+                var delivery_time_before = driverFedex.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[2]/div/div/div[43]/span"));
                 delivery_time_before.Click();
                 Thread.Sleep(1000);
 
 
 
-                var uncheck_status = driver2.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[2]/div/div/div[51]/span"));
+                var uncheck_status = driverFedex.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[2]/div/div/div[51]/span"));
                 uncheck_status.Click();
                 Thread.Sleep(2000);
 
@@ -251,35 +248,35 @@ namespace ScrapingFormProject
 
 
 
-                //var shipper_info = driver2.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[1]/a[2]"));
+                //var shipper_info = driverFedex.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[1]/a[2]"));
                 //shipper_info.Click();
                 //Thread.Sleep(1500);
 
 
-                //var shipper_city = driver2.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[2]/div/div/div[4]/span/label/input"));
+                //var shipper_city = driverFedex.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[2]/div/div/div[4]/span/label/input"));
                 //shipper_city.Click();
                 //Thread.Sleep(1500);
 
 
 
 
-                var recipient_info = driver2.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[1]/a[3]/div"));
+                var recipient_info = driverFedex.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[1]/a[3]/div"));
                 recipient_info.Click();
                 Thread.Sleep(1500);
 
 
-                var recipient_city = driver2.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[2]/div/div/div[5]/span/label/input")); ;
+                var recipient_city = driverFedex.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[1]/div[2]/div/div/div[5]/span/label/input")); ;
                 recipient_city.Click();
                 Thread.Sleep(1500);
 
 
 
 
-                var apply = driver2.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[2]/button"));
+                var apply = driverFedex.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-action-bar/div[1]/div[2]/div[2]/app-edit-columns/div/div[2]/button"));
                 apply.Submit();
                 Thread.Sleep(3000);
 
-                var ful_screen = driver2.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-list-view-grid/div[1]/a"));
+                var ful_screen = driverFedex.FindElement(By.XPath("/html/body/app-root/fdx-common-core/div[3]/app-tracking-root/div[2]/div[2]/div/div/app-list-view-grid/div[1]/a"));
                 ful_screen.Click();
                 Thread.Sleep(1500);
 
@@ -291,7 +288,7 @@ namespace ScrapingFormProject
 
 
 
-                var data = driver2.FindElements(By.CssSelector("[role='row']"));
+                var data = driverFedex.FindElements(By.CssSelector("[role='row']"));
 
 
                 string text = "";
@@ -303,20 +300,20 @@ namespace ScrapingFormProject
                 //  var array = text.Split("\n");
                 var array = text.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
-                //***************************END OF FEDEX***********************
+               
                 int l = 0;
-                ListViewItem listViewItemforFedex = new ListViewItem();
-                ListView listViewforFedex = new ListView();
-                listView1.Items.Add("Fedex Bilgiler");
-                listViewItem1 = new ListViewItem();
-                listViewItem1.SubItems.Add("TakipNumarasi");
-                listViewItem1.SubItems.Add("GondericiAd");
-                listViewItem1.SubItems.Add("GondericiFirma");
-                listViewItem1.SubItems.Add("AliciAd");
-                listViewItem1.SubItems.Add("AliciFirma");
-                listViewItem1.SubItems.Add("AliciSehir");
-                listViewItem1.SubItems.Add("AlinisTarihi");
-                listView1.Items.Add(listViewItem1);
+                //ListViewItem listViewItemforFedex = new ListViewItem();
+                //ListView listViewforFedex = new ListView();
+                //listView1.Items.Add("Fedex Bilgiler");
+                //listViewItem1 = new ListViewItem();
+                //listViewItem1.SubItems.Add("TakipNumarasi");
+                //listViewItem1.SubItems.Add("GondericiAd");
+                //listViewItem1.SubItems.Add("GondericiFirma");
+                //listViewItem1.SubItems.Add("AliciAd");
+                //listViewItem1.SubItems.Add("AliciFirma");
+                //listViewItem1.SubItems.Add("AliciSehir");
+                //listViewItem1.SubItems.Add("AlinisTarihi");
+                //listView1.Items.Add(listViewItem1);
                 while (l < array.Length - 12)
                 {
 
@@ -342,7 +339,7 @@ namespace ScrapingFormProject
                         listViewItem1.SubItems.Add(AlinisTarihi);
                         
                        
-                        listView1.Items.Add(listViewItem1);
+                        //listView1.Items.Add(listViewItem1);
 
 
                         string queryforFedex = "INSERT INTO Shipment ([TakipNumarasi], [GondericiAd], [GondericiFirma], [AliciAd], [AliciFirma], [AliciSehir], [BilgiCekimTarihi], [KargoFirmasi]) " +
@@ -369,70 +366,58 @@ namespace ScrapingFormProject
                     l++;
                 }
 
-                //var retry = driver2.FindElement(By.XPath("/html/body/wlgn-root/div/ciam-head-foot/fdx-common-core/main/div/div/div/div/wlgn-error/wlgn-retry/div/div/ciam-spinner-button/button"));
-                //if(retry!=null)
-                //{
-                //    retry.Click();
-                //    Thread.Sleep(5000);
-                //}
-
+                //***************************END OF FEDEX***********************
 
 
 
                 //****************************START OF UPS*******************************
 
-                var toggle_btn = driver3.FindElement(By.XPath("/html/body/div[1]/div[1]/div/div/div/div/header/div/div[4]/button"));
+                var toggle_btn = driverUPS.FindElement(By.XPath("/html/body/div[1]/div[1]/div/div/div/div/header/div/div[4]/button"));
                 toggle_btn.Click();
                 Thread.Sleep(1500);
-                var nakliye_btn = driver3.FindElement(By.XPath("/html/body/div[1]/div[1]/div/div/div/div/header/div/div[5]/nav[1]/ul/li[1]/a"));
+                var nakliye_btn = driverUPS.FindElement(By.XPath("/html/body/div[1]/div[1]/div/div/div/div/header/div/div[5]/nav[1]/ul/li[1]/a"));
                 nakliye_btn.Click();
                 Thread.Sleep(1500);
 
 
-                var gonderi_gecmisi = driver3.FindElement(By.XPath("/html/body/div[1]/div[1]/div/div/div/div/header/div/div[5]/nav[1]/ul/li[1]/div/div[1]/ul/li[5]/a"));
+                var gonderi_gecmisi = driverUPS.FindElement(By.XPath("/html/body/div[1]/div[1]/div/div/div/div/header/div/div[5]/nav[1]/ul/li[1]/div/div[1]/ul/li[5]/a"));
                 gonderi_gecmisi.Click();
                 Thread.Sleep(13000);
-                driver3.Manage().Window.Maximize();
+                driverUPS.Manage().Window.Maximize();
 
 
-                var get_fifty_result = driver3.FindElement(By.XPath("/html/body/div[5]/div[3]/div/div/div/div/div/main/div[7]/app-root/div[2]/div/div/div[1]/div/div[3]/app-history-results-per-page/div/shared-results-per-page/shared-field/div/div/select"));
+                var get_fifty_result = driverUPS.FindElement(By.XPath("/html/body/div[5]/div[3]/div/div/div/div/div/main/div[7]/app-root/div[2]/div/div/div[1]/div/div[3]/app-history-results-per-page/div/shared-results-per-page/shared-field/div/div/select"));
                 get_fifty_result.Click();
                 Thread.Sleep(3000);
-                var select_fifty = driver3.FindElement(By.XPath("/html/body/div[5]/div[3]/div/div/div/div/div/main/div[7]/app-root/div[2]/div/div/div[1]/div/div[3]/app-history-results-per-page/div/shared-results-per-page/shared-field/div/div/select/option[3]"));
+                var select_fifty = driverUPS.FindElement(By.XPath("/html/body/div[5]/div[3]/div/div/div/div/div/main/div[7]/app-root/div[2]/div/div/div[1]/div/div[3]/app-history-results-per-page/div/shared-results-per-page/shared-field/div/div/select/option[3]"));
                 select_fifty.Click();
                 Thread.Sleep(3000);
 
 
-                //var close_popdown = driver3.FindElement(By.XPath("/html/body/div[6]/div/button"));
-                //close_popdown.Click();
-                //Thread.Sleep(1000);
-
-                //var gorunum = driver3.FindElement(By.XPath("/html/body/div[5]/div[3]/div/div/div/div/div/main/div[7]/app-root/div[2]/div/div/div[3]/div/fieldset/div/div/div[2]"));
-                //gorunum.Click();
-                //Thread.Sleep(3000);
+                
 
 
-                var td = driver3.FindElements(By.TagName("td"));
+                var td = driverUPS.FindElements(By.TagName("td"));
                 string td_data = "";
                 foreach (var item in td)
                 {
                     td_data += item.Text + "\n";
                 }
-                //  var arrayforUPS = td_data.Split("\n");
+                
                 var arrayforUPS = td_data.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
 
                 int j = 0;
 
 
 
-                listView1.Items.Add("UPS Bilgiler");
-                listViewItem1 = new ListViewItem();
-                listViewItem1.SubItems.Add("GonderiTarihi");
-                listViewItem1.SubItems.Add("AliciFirma");
-                listViewItem1.SubItems.Add("AliciUlke");
-                listViewItem1.SubItems.Add("TakipNo");
-                listViewItem1.SubItems.Add("AlinisTarihi");
-                listView1.Items.Add(listViewItem1);
+                //listView1.Items.Add("UPS Bilgiler");
+                //listViewItem1 = new ListViewItem();
+                //listViewItem1.SubItems.Add("GonderiTarihi");
+                //listViewItem1.SubItems.Add("AliciFirma");
+                //listViewItem1.SubItems.Add("AliciUlke");
+                //listViewItem1.SubItems.Add("TakipNo");
+                //listViewItem1.SubItems.Add("AlinisTarihi");
+                //listView1.Items.Add(listViewItem1);
 
                 int nottwice = 1;
                 while (j <= arrayforUPS.Length - 1)
@@ -441,20 +426,20 @@ namespace ScrapingFormProject
                     {
                         try
                         {
-                            var page2 = driver3.FindElement(By.XPath("/html/body/div[5]/div[3]/div/div/div/div/div/main/div[7]/app-root/div[2]/div/div/div[4]/history-pagination/shared-pagination-bar/nav/ul/li[4]/button"));
+                            var page2 = driverUPS.FindElement(By.XPath("/html/body/div[5]/div[3]/div/div/div/div/div/main/div[7]/app-root/div[2]/div/div/div[4]/history-pagination/shared-pagination-bar/nav/ul/li[4]/button"));
                             page2.Click();
                             Thread.Sleep(6000);
                         }
                         catch (Exception exc)
                         {
-                            ScrollToBottom(driver3);
+                            ScrollToBottom(driverUPS);
                             Thread.Sleep(2000);
-                            var page2 = driver3.FindElement(By.XPath("/html/body/div[5]/div[3]/div/div/div/div/div/main/div[7]/app-root/div[2]/div/div/div[4]/history-pagination/shared-pagination-bar/nav/ul/li[4]/button"));
+                            var page2 = driverUPS.FindElement(By.XPath("/html/body/div[5]/div[3]/div/div/div/div/div/main/div[7]/app-root/div[2]/div/div/div[4]/history-pagination/shared-pagination-bar/nav/ul/li[4]/button"));
                             page2.Click();
                             Thread.Sleep(6000);
                         }
 
-                        var tdforpage2 = driver3.FindElements(By.TagName("td"));
+                        var tdforpage2 = driverUPS.FindElements(By.TagName("td"));
                         string td_dataforpage2 = "";
                         foreach (var item in tdforpage2)
                         {
@@ -497,44 +482,47 @@ namespace ScrapingFormProject
                         commandforUPS.Parameters.AddWithValue("@firma", firma);
                         commandforUPS.ExecuteNonQuery();
 
-                        listView1.Items.Add(listViewItem1);
+                        //listView1.Items.Add(listViewItem1);
 
 
                     }
                     j++;
                 }
                 //*********************************END OF UPS***************************
-                listViewItem1 = new ListViewItem();
-                listView1.Items.Add("DHL Bilgiler");
-                listViewItem1 = new ListViewItem();
-                ListViewItem listViewItemforDHlColumn = new ListViewItem();
-                listViewItem1.SubItems.Add("TakipNumarasi");
-                listViewItem1.SubItems.Add("GonderiTarihi");
-                listViewItem1.SubItems.Add("GondericiFirma");
-                listViewItem1.SubItems.Add("GondericiAd");
-                listViewItem1.SubItems.Add("GondericiAdres");
-                listViewItem1.SubItems.Add("BilgiCekimTarihi");
-                listViewItem1.SubItems.Add("AliciFirma");
-                listViewItem1.SubItems.Add("AliciIsim");
-                listViewItem1.SubItems.Add("AliciUlke");
-
-                listView1.Items.Add(listViewItem1);
 
 
 
+                //listViewItem1 = new ListViewItem();
+                //listView1.Items.Add("DHL Bilgiler");
+                //listViewItem1 = new ListViewItem();
+                //ListViewItem listViewItemforDHlColumn = new ListViewItem();
+                //listViewItem1.SubItems.Add("TakipNumarasi");
+                //listViewItem1.SubItems.Add("GonderiTarihi");
+                //listViewItem1.SubItems.Add("GondericiFirma");
+                //listViewItem1.SubItems.Add("GondericiAd");
+                //listViewItem1.SubItems.Add("GondericiAdres");
+                //listViewItem1.SubItems.Add("BilgiCekimTarihi");
+                //listViewItem1.SubItems.Add("AliciFirma");
+                //listViewItem1.SubItems.Add("AliciIsim");
+                //listViewItem1.SubItems.Add("AliciUlke");
+
+                //listView1.Items.Add(listViewItem1);
+
+
+                //*********************************START OF DHL***************************
                 int num = 0;
                 int i = 0;
 
                 try
                 {
-                    var tum_gonderiler = driver.FindElement(By.XPath("/html/body/header/div[1]/div[3]/div/table/tbody/tr/td[1]/table/tbody/tr/td[4]/a"));
+                    var tum_gonderiler = driverDHL.FindElement(By.XPath("/html/body/header/div[1]/div[3]/div/table/tbody/tr/td[1]/table/tbody/tr/td[4]/a"));
                     var tr_en_control = tum_gonderiler.GetAttribute("text");
                     if (tr_en_control.Contains("Gönderileri Yönet"))
                     {
-                        var english = driver.FindElement(By.XPath("/html/body/header/div[1]/nav/div/div[3]/a[1]"));
+                        var english = driverDHL.FindElement(By.XPath("/html/body/header/div[1]/nav/div/div[3]/a[1]"));
                         english.Click();
                         Thread.Sleep(1500);
-                        var evet = driver.FindElement(By.XPath("/html/body/div[10]/div/div/div/div/div/div/div/div[2]/button[1]"));
+                        var evet = driverDHL.FindElement(By.XPath("/html/body/div[10]/div/div/div/div/div/div/div/div[2]/button[1]"));
                         evet.Click();
                         Thread.Sleep(10000);
                     }
@@ -544,14 +532,14 @@ namespace ScrapingFormProject
                 }
                 catch (StaleElementReferenceException ex)
                 {
-                    var tum_gonderiler = driver.FindElement(By.XPath("/html/body/header/div[1]/div[3]/div/table/tbody/tr/td[1]/table/tbody/tr/td[4]/a"));
+                    var tum_gonderiler = driverDHL.FindElement(By.XPath("/html/body/header/div[1]/div[3]/div/table/tbody/tr/td[1]/table/tbody/tr/td[4]/a"));
                     var tr_en_control = tum_gonderiler.GetAttribute("text");
                     if (tr_en_control.Contains("Gönderileri Yönet"))
                     {
-                        var english = driver.FindElement(By.XPath("/html/body/header/div[1]/nav/div/div[3]/a[1]"));
+                        var english = driverDHL.FindElement(By.XPath("/html/body/header/div[1]/nav/div/div[3]/a[1]"));
                         english.Click();
                         Thread.Sleep(1500);
-                        var evet = driver.FindElement(By.XPath("/html/body/div[10]/div/div/div/div/div/div/div/div[2]/button[1]"));
+                        var evet = driverDHL.FindElement(By.XPath("/html/body/div[10]/div/div/div/div/div/div/div/div[2]/button[1]"));
                         evet.Click();
                         Thread.Sleep(10000);
                     }
@@ -561,30 +549,30 @@ namespace ScrapingFormProject
                 }
                 catch (NoSuchElementException ex)
                 {
-                    btn = driver.FindElement(By.XPath("/html/body/div[8]/div[2]/div[2]/div[3]/div/button[1]"));
+                    var btn = driverDHL.FindElement(By.XPath("/html/body/div[8]/div[2]/div[2]/div[3]/div/button[1]"));
                     btn.Click();
                     Thread.Sleep(1000);
-                    submitbtn = driver.FindElement(By.XPath("/html/body/header/div[1]/div[3]/div/table/tbody/tr/td[2]/table[1]/tbody/tr/td[2]/div/div/div[2]/form/button"));
+                    submitbtn = driverDHL.FindElement(By.XPath("/html/body/header/div[1]/div[3]/div/table/tbody/tr/td[2]/table[1]/tbody/tr/td[2]/div/div/div[2]/form/button"));
 
                     submitbtn.Click();
                     Thread.Sleep(3000);
                 }
 
                 Thread.Sleep(3000);
-                var tum_gonderiler_goruntule = driver.FindElement(By.XPath("/html/body/header/div[1]/div[3]/div/table/tbody/tr/td[1]/table/tbody/tr/td[4]/div/div/div[1]/ul/li[1]/a"));
+                var tum_gonderiler_goruntule = driverDHL.FindElement(By.XPath("/html/body/header/div[1]/div[3]/div/table/tbody/tr/td[1]/table/tbody/tr/td[4]/div/div/div[1]/ul/li[1]/a"));
                 tum_gonderiler_goruntule.Click();
                 Thread.Sleep(5000);
 
 
-                var hundred_result = driver.FindElement(By.XPath("/html/body/div[2]/div/div/div/div/section/div[3]/div[10]/div[1]/div/div[4]/div/div/div[2]/div[1]/div[2]/select"));
+                var hundred_result = driverDHL.FindElement(By.XPath("/html/body/div[2]/div/div/div/div/section/div[3]/div[10]/div[1]/div/div[4]/div/div/div[2]/div[1]/div[2]/select"));
                 hundred_result.Click();
                 Thread.Sleep(2000);
-                var hundred_result_click = driver.FindElement(By.XPath("/html/body/div[2]/div/div/div/div/section/div[3]/div[10]/div[1]/div/div[4]/div/div/div[2]/div[1]/div[2]/select/option[4]"));
+                var hundred_result_click = driverDHL.FindElement(By.XPath("/html/body/div[2]/div/div/div/div/section/div[3]/div[10]/div[1]/div/div[4]/div/div/div[2]/div[1]/div[2]/select/option[4]"));
                 hundred_result_click.Click();
                 Thread.Sleep(12000);
 
 
-                var matches = driver.FindElements(By.TagName("tr"));
+                var matches = driverDHL.FindElements(By.TagName("tr"));
                 string text_data = "";
                 foreach (var item in matches)
                 {
@@ -598,17 +586,17 @@ namespace ScrapingFormProject
                 int k = 0;
 
 
-                bool control = true;
-                listViewItem1 = new ListViewItem();
-                var gondericifirma = "";
-                var gondericiname = "";
-                var gondericiulke = "";
-                var alinistarihi = "";
-                var alicifirma = "";
-               var aliciname = "";
-               var aliciulke = "";
-                var numara = "";
-                var KargoFirmasi = "DHL";
+                 bool control = true;
+                 listViewItem1 = new ListViewItem();
+                 var gondericifirma = "";
+                 var gondericiname = "";
+                 var gondericiulke = "";
+                 var alinistarihi = "";
+                 var alicifirma = "";
+                 var aliciname = "";
+                 var aliciulke = "";
+                 var numara = "";
+                 var KargoFirmasi = "DHL";
 
                 while (k < array.Length - 1)
                 {
@@ -650,10 +638,10 @@ namespace ScrapingFormProject
                              gondericiname = array[k + 2];
                              gondericiulke = array[k + 3];
                              alinistarihi = DateTime.Now.ToString();
-                            listViewItem1.SubItems.Add(gondericifirma);
-                            listViewItem1.SubItems.Add(gondericiname);
-                            listViewItem1.SubItems.Add(gondericiulke);
-                            listViewItem1.SubItems.Add(alinistarihi);
+                            //listViewItem1.SubItems.Add(gondericifirma);
+                            //listViewItem1.SubItems.Add(gondericiname);
+                            //listViewItem1.SubItems.Add(gondericiulke);
+                            //listViewItem1.SubItems.Add(alinistarihi);
 
                         }
                         else if (cmp.Equals("Ship To"))
@@ -661,9 +649,9 @@ namespace ScrapingFormProject
                              alicifirma = array[k + 1];
                              aliciname = array[k + 2];
                              aliciulke = array[k + 3];
-                            listViewItem1.SubItems.Add(alicifirma);
-                            listViewItem1.SubItems.Add(aliciname);
-                            listViewItem1.SubItems.Add(aliciulke);
+                            //listViewItem1.SubItems.Add(alicifirma);
+                            //listViewItem1.SubItems.Add(aliciname);
+                            //listViewItem1.SubItems.Add(aliciulke);
 
 
 
@@ -687,7 +675,6 @@ namespace ScrapingFormProject
                             if (index != -1)
                             {
                                  aliciulke = aliciulke.Substring(0, index);
-                               // Console.WriteLine(truncatedString);
                             }
 
 
@@ -763,10 +750,7 @@ namespace ScrapingFormProject
 
         }
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
+      
     }
 }
 
